@@ -5,9 +5,12 @@ create table appointments
     doctor_id  bigint   not null,
     patient_id bigint   not null,
     date      datetime not null,
+    status varchar(20) not null,
+    reason varchar(20),
+
 
     primary key (id),
-    constraint fk_consultas_medico_id foreign key (doctor_id) references doctors (id),
-    constraint fk_consultas_paciente_id foreign key (patient_id) references patients (id)
+    constraint fk_appointments_doctor_id foreign key (doctor_id) references doctors (id),
+    constraint fk_appointments_patient_id foreign key (patient_id) references patients (id)
 
 );
