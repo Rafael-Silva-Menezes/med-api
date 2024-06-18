@@ -1,10 +1,7 @@
 package med.vol.api.doctor.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import med.vol.api.doctor.presentation.dto.CreateDoctorDto;
 import med.vol.api.doctor.presentation.dto.UpdateDoctorDto;
 import med.vol.api.shared.domain.Address;
@@ -16,6 +13,7 @@ import med.vol.api.shared.domain.Address;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@ToString
 public class Doctor {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
