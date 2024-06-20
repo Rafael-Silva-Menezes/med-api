@@ -3,12 +3,11 @@ package med.vol.api.doctor.domain.validation;
 import jakarta.validation.ValidationException;
 import med.vol.api.appointment.domain.validations.schedule.ValidatorScheduleAppointment;
 import med.vol.api.appointment.infra.AppointmentRepository;
-
-import java.time.LocalDateTime;
-
 import med.vol.api.appointment.presentation.dto.CreateAppointmentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
 
 @Component
 public class DoctorOverlapAppointmentValidator implements ValidatorScheduleAppointment {
@@ -19,8 +18,8 @@ public class DoctorOverlapAppointmentValidator implements ValidatorScheduleAppoi
         Long doctorId = createAppointmentDto.doctorId();
         LocalDateTime appointmentDate = createAppointmentDto.date();
 
-        var doctorAlreadyAppointment = appointmentRepository
-                .existsByDoctorIdAndDateAndReasonIsNull(doctorId, appointmentDate);
+        Boolean doctorAlreadyAppointment = appointmentRepository
+                .existsByDoctorIdAndDateAndReasonIsNull(doctorId , appointmentDate);
 
         if (doctorAlreadyAppointment) {
             throw new ValidationException("Doctor already has an appointment");

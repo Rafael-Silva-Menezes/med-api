@@ -3,12 +3,12 @@ package med.vol.api.doctor.presentation.controller;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import med.vol.api.doctor.domain.entity.Doctor;
+import med.vol.api.doctor.infra.DoctorRepository;
 import med.vol.api.doctor.presentation.dto.CreateDoctorDto;
 import med.vol.api.doctor.presentation.dto.DetailsDoctorDto;
 import med.vol.api.doctor.presentation.dto.ListDoctorDto;
 import med.vol.api.doctor.presentation.dto.UpdateDoctorDto;
-import med.vol.api.doctor.domain.entity.Doctor;
-import med.vol.api.doctor.infra.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +26,7 @@ public class DoctorController {
 
     @PostMapping("/create")
     @Transactional
-    public ResponseEntity createDoctors(@RequestBody @Valid CreateDoctorDto data, UriComponentsBuilder uriBuilder){
+    public ResponseEntity createDoctors(@RequestBody @Valid CreateDoctorDto data , UriComponentsBuilder uriBuilder) {
         Doctor doctor = new Doctor(data);
         doctorRepository.save(doctor);
 
@@ -36,23 +36,23 @@ public class DoctorController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<Page<ListDoctorDto>> getAllDoctors(@PageableDefault(size = 10, sort = {"name"}) Pageable pageable){
-        Page<ListDoctorDto> doctors = doctorRepository.findAllByActiveTrue(pageable).map(ListDoctorDto::new);
+    public ResponseEntity<Page<ListDoctorDto>> getAllDoctors(@PageableDefault(size = 10, sort = {"name"}) Pageable pageable) {
+        Page<ListDoctorDto> doctors = doctorRepository.findByActiveTrue(pageable).map(ListDoctorDto::new);
         return ResponseEntity.ok(doctors);
     }
 
     @PutMapping("/update/{id}")
     @Transactional
-    public ResponseEntity updateDoctor(@PathVariable Long id, @RequestBody @Valid UpdateDoctorDto data){
-            Doctor doctor = doctorRepository.getReferenceById(id);
-            doctor.updateDoctorInfo(data);
+    public ResponseEntity updateDoctor(@PathVariable Long id , @RequestBody @Valid UpdateDoctorDto data) {
+        Doctor doctor = doctorRepository.getReferenceById(id);
+        doctor.updateDoctorInfo(data);
 
-            return ResponseEntity.ok(new DetailsDoctorDto(doctor));
+        return ResponseEntity.ok(new DetailsDoctorDto(doctor));
     }
 
     @DeleteMapping("/delete/{id}")
     @Transactional
-    public ResponseEntity deleteDoctor(@PathVariable Long id){
+    public ResponseEntity deleteDoctor(@PathVariable Long id) {
         Doctor doctor = doctorRepository.getReferenceById(id);
         doctor.toBeInactive();
 
@@ -60,7 +60,7 @@ public class DoctorController {
     }
 
     @GetMapping("/details/{id}")
-    public ResponseEntity detailsDoctor(@PathVariable Long id){
+    public ResponseEntity detailsDoctor(@PathVariable Long id) {
         Doctor doctor = doctorRepository.getReferenceById(id);
 
         return ResponseEntity.ok(new DetailsDoctorDto(doctor));

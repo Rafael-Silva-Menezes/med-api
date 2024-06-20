@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
-    Page<Doctor> findAllByActiveTrue(Pageable pageable);
+    Page<Doctor> findByActiveTrue(Pageable pageable);
 
     @Query("""
                     select d from Doctor d
@@ -25,11 +25,6 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
             order by rand()
             limit 1
             """)
-    Doctor choiceDoctorAvailable(Specialization specialization, LocalDateTime date);
+    Doctor choiceDoctorAvailable(Specialization specialization , LocalDateTime date);
 
-    @Query("""
-    select d.active from Doctor d
-    where d.id = :id
-""")
-    Boolean findActiveById(Long id);
 }
