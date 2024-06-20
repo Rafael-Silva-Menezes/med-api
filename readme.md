@@ -1,6 +1,3 @@
-Claro! Aqui está o texto em formato Markdown:
-
-```markdown
 # Medical Application API
 
 This project is a medical application API developed using Java, Spring Boot, and MySQL. It manages doctors, patients, and appointments within a medical practice.
@@ -47,6 +44,7 @@ The application follows a modular architecture with the following structure:
 ## Installation
 
 1. Clone the repository:
+
     ```bash
     git clone <repository-url>
     cd medical-application
@@ -57,6 +55,7 @@ The application follows a modular architecture with the following structure:
     - Update the `application.properties` file with your database credentials.
 
 3. Run the application:
+
     ```bash
     mvn spring-boot:run
     ```
@@ -112,4 +111,3 @@ Contributions are welcome! Please follow these steps:
 ## License
 
 This project is licensed under the MIT License.
-```
