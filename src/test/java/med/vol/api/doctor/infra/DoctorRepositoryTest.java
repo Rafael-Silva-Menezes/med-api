@@ -65,7 +65,8 @@ class DoctorRepositoryTest {
     void shouldReturnNullIfNoDoctorAvailableAtChosenDateTime() {
         Doctor doctor = doctorRepositoryStub.insertDoctor(Specialization.CARDIOLOGY);
         Patient patient = patientRepositoryStub.insertPatient();
-        appointmentRepositoryStub.insertAppointment(doctor , patient , scheduleDateOnMonday10Am , AppointmentStatus.SCHEDULED);
+        appointmentRepositoryStub
+                .insertAppointment(doctor , patient , scheduleDateOnMonday10Am , AppointmentStatus.SCHEDULED);
 
         Doctor chosenDoctor = doctorRepository.choiceDoctorAvailable(Specialization.CARDIOLOGY , scheduleDateOnMonday10Am);
         assertThat(chosenDoctor).isNull();
@@ -86,7 +87,8 @@ class DoctorRepositoryTest {
         Doctor doctor2 = doctorRepositoryStub.insertDoctor(Specialization.CARDIOLOGY);
 
         Patient patient = patientRepositoryStub.insertPatient();
-        appointmentRepositoryStub.insertAppointment(doctor1 , patient , scheduleDateOnMonday10Am , AppointmentStatus.SCHEDULED);
+        appointmentRepositoryStub
+                .insertAppointment(doctor1 , patient , scheduleDateOnMonday10Am , AppointmentStatus.SCHEDULED);
 
         Doctor chosenDoctor = doctorRepository.choiceDoctorAvailable(Specialization.CARDIOLOGY , scheduleDateOnMonday10Am);
         assertThat(chosenDoctor).isEqualTo(doctor2);

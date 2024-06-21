@@ -2,10 +2,13 @@ package med.vol.api.shared.exceptions;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.sql.SQLNonTransientConnectionException;
 
 @RestControllerAdvice
 public class HandleErrors {
@@ -25,9 +28,19 @@ public class HandleErrors {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 
-    private record DataValidationError(String field, String message) {
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity handleMessageNotReadable(HttpMessageNotReadableException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+    @ExceptionHandler(SQLNonTransientConnectionException.class)
+    public ResponseEntity handleSQLNonTransientConnectionException(SQLNonTransientConnectionException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+    private record DataValidationError(String field , String message) {
         public DataValidationError(FieldError fieldError) {
-            this(fieldError.getField(), fieldError.getDefaultMessage());
+            this(fieldError.getField() , fieldError.getDefaultMessage());
         }
     }
 }
